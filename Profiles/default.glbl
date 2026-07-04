@@ -4,4 +4,89 @@
    <name>default</name>
    <tag></tag>
    <defaultProfile>true</defaultProfile>
+   <GlobalVariableEntity>
+      <description>false for skip eror testcase in TS</description>
+      <initValue>false</initValue>
+      <name>STOP_SUITE</name>
+      <protected>false</protected>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
+      <initValue>1</initValue>
+      <name>SHORT_TIMEOUT</name>
+      <protected>false</protected>
+      <valueType>NUMBER</valueType>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
+      <initValue>3</initValue>
+      <name>TIMEOUT</name>
+      <protected>false</protected>
+      <valueType>NUMBER</valueType>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
+      <initValue>5</initValue>
+      <name>LONG_TIMEOUT</name>
+      <protected>false</protected>
+      <valueType>NUMBER</valueType>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
+      <initValue>15</initValue>
+      <name>MAX_WAIT_SECONDS</name>
+      <protected>false</protected>
+      <valueType>NUMBER</valueType>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
+      <initValue>'Screenshot'</initValue>
+      <name>SCREENSHOT_PATH</name>
+      <protected>false</protected>
+      <valueType>STRING</valueType>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description>update in katalonc</description>
+      <initValue></initValue>
+      <name>LOCAL_PROPERTIES_PATH</name>
+      <protected>false</protected>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description>can update in katalonc</description>
+      <initValue>true</initValue>
+      <name>TESTRAIL_INTEGRATION</name>
+      <protected>false</protected>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description>can update in katalonc</description>
+      <initValue>[('TESTRAIL_PROJECT_NAME') : '', ('TESTRAIL_TEST_PLAN_ID') : '']</initValue>
+      <name>TESTRAIL_PROPERTIES</name>
+      <protected>false</protected>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description>update in katalonc</description>
+      <initValue>''</initValue>
+      <name>TESTRUN_NAME</name>
+      <protected>false</protected>
+      <valueType>STRING</valueType>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description>update in local.properties</description>
+      <initValue></initValue>
+      <name>BASE_URL</name>
+      <protected>false</protected>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description>update in local.properties</description>
+      <initValue>[:]</initValue>
+      <name>USER_INFO</name>
+      <protected>false</protected>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description>methof Util.highlightElement</description>
+      <initValue>'#FFFF00'</initValue>
+      <name>BORDER_COLOR</name>
+      <protected>false</protected>
+      <valueType>STRING</valueType>
+   </GlobalVariableEntity>
 </GlobalVariableEntities>

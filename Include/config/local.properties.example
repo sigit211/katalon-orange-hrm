@@ -1,0 +1,28 @@
+# Template konfigurasi lokal.
+# 1. Copy file ini menjadi "local.properties" (tanpa .example)
+# 2. Isi nilai di bawah sesuai environment lokal kamu
+# 3. File local.properties sudah di-gitignore, JANGAN rename file ini
+#
+# Nilai kosong akan diabaikan (fallback ke nilai di profile Katalon).
+
+# === URL Aplikasi ===
+BASE_URL=https://your-app-url.example.com/
+
+# === TestRail Credentials ===
+TESTRAIL_URL=https://your-instance.testrail.io/
+TESTRAIL_USERNAME=your.email@company.com
+TESTRAIL_PASSWORD=your_api_key_or_password
+
+# === User Credentials (per profile) ===
+# Format: <nama-profile>.USER_ADMIN_<FIELD>=value
+# Credential hanya di-apply jika key cocok dengan profile yang sedang aktif.
+#
+# [PROFILE BARU] Jika menambahkan profile baru, tambahkan blok di bawah ini
+# dengan prefix nama profile yang sesuai, lalu update juga:
+#   1. local.properties          â tambah blok credential dengan prefix baru
+#   2. local.properties.example  â tambah blok placeholder di sini
+#   3. Profiles/<nama>.glbl      â pastikan USER_ADMIN bernilai [:] (map kosong)
+
+# Profile: default
+default.USER_INFO_USERNAME=your_nik
+default.USER_INFO_PASSWORD=your_password
