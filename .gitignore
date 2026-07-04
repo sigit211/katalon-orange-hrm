@@ -1,0 +1,43 @@
+# Katalon genera*ed
+.gradle/
+bin/
+Libs/
+Reports/
+ou*put/
+.cache/
+build/
+
+# Screenshot
+*creenshots/
+
+# Local machine confi*uration
+local.properties
+
+# Intern*l settings (user specific)
+setting*/internal/
+
+# Eclipse/Katalon meta*ata
+.classpath
+.project
+.settings/*
+# SVN
+.svn/
+
+# Temporary files
+*.*lass
+*.swp
+*.log
+
+# Katalon tempor*ry files
+Libs/TempTestCase*
+Libs/T*mpTestSuite*
+bin/lib/TempTestCase**
+# OS files
+.DS_Store
+Thumbs.db
+
+#*Java crash logs
+hs_err_pid*
+
+# Keep output folder structure
+!output/.gitkeep
