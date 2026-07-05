@@ -41,3 +41,7 @@ hs_err_pid*
 
 # Keep output folder structure
 !output/.gitkeep
+
+#for portofolio context
+Keywords/core/CredentialLoader.groovy
+Keywords/core/GlobalVariableConfig.groovy
