@@ -59,7 +59,7 @@
    </GlobalVariableEntity>
    <GlobalVariableEntity>
       <description>can update in katalonc</description>
-      <initValue>[('TESTRAIL_PROJECT_NAME') : '', ('TESTRAIL_TEST_PLAN_ID') : '']</initValue>
+      <initValue>[('TESTRAIL_PROJECT_NAME') : 'ORANGE HRM', ('TESTRAIL_TEST_PLAN_ID') : 'R34']</initValue>
       <name>TESTRAIL_PROPERTIES</name>
       <protected>false</protected>
    </GlobalVariableEntity>

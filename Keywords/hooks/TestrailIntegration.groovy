@@ -4,6 +4,8 @@ import org.json.JSONArray
 import org.json.JSONObject
 
 import com.kms.katalon.core.exception.StepFailedException
+import com.kms.katalon.core.mobile.keyword.MobileBuiltInKeywords as Mobile
+import com.kms.katalon.core.mobile.keyword.internal.MobileDriverFactory
 import com.kms.katalon.core.testobject.ConditionType
 import com.kms.katalon.core.testobject.RequestObject
 import com.kms.katalon.core.testobject.ResponseObject
@@ -11,12 +13,14 @@ import com.kms.katalon.core.testobject.TestObjectProperty
 import com.kms.katalon.core.testobject.impl.HttpTextBodyContent
 import com.kms.katalon.core.util.KeywordUtil
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
+import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 
 import groovy.json.JsonOutput
 import internal.GlobalVariable
 import core.GlobalVariableConfig
 import core.HttpRequest
 import core.SafeActionsMobile
+import core.SafeActionsWeb
 import core.Util
 
 class TestrailIntegration {
@@ -299,8 +303,10 @@ class TestrailIntegration {
 				def resp = HttpRequest.postMultipart(endpoint, headers, '', fields, files, 200)
 				KeywordUtil.logInfo("[addAttachmentToRun] OK: ${f.name} -> ${resp}")
 				JSONObject respJson = new JSONObject(JsonOutput.toJson(resp))
-				if (respJson.has("attachment_id")) {
-					attachments.put(f.name, respJson.getString("attachment_id"))
+				Object attachmentIdObj = respJson.opt("attachment_id")
+				if (attachmentIdObj != null) {
+					String attachmentId = attachmentIdObj.toString()
+					attachments.put(f.name, attachmentId)
 
 					// Pindahkan file error ke folder arsip: EROR/<testcaseName>/<file>.png
 					if (f.name.startsWith("ERROR_")) {
@@ -318,6 +324,8 @@ class TestrailIntegration {
 							KeywordUtil.markWarning("[addAttachmentToRun] Error saat memindahkan ${f.name}: ${moveEx.message}")
 						}
 					}
+				} else {
+					KeywordUtil.markWarning("[addAttachmentToRun] Respons upload tidak mengandung attachment_id untuk ${f.name}: ${resp}")
 				}
 			} catch (StepFailedException sfe) {
 				KeywordUtil.markWarning("[addAttachmentToRun] Gagal upload ${f.name}: ${sfe.message}")
@@ -408,13 +416,27 @@ class TestrailIntegration {
 				.replace("\r", "")
 	}
 
-	// Bangun URL yang aman (menjaga satu slash)
+	// Bangun URL yang aman (menjaga satu slash) dan sesuai format TestRail API
+	// Bisa handle kedua format: dengan atau tanpa index.php?
 	private static String buildUrl(String path) {
 		if (Util.isNullOrEmpty(testrailUrl)) return path
 		String base = testrailUrl.endsWith("/") ? testrailUrl.substring(0, testrailUrl.length() - 1) : testrailUrl
-		String p = path.startsWith("/") ? path : "/" + path
-		return base + p
+		String p = path.startsWith("/") ? path.substring(1) : path
+
+		// Jika base sudah mengandung /index.php?, langsung gabung tanpa tambah lagi
+		if (base.contains("/index.php?")) {
+			return base + "/" + p
+		}
+
+		// Jika path adalah API path (api/v2/...), tambahkan /index.php?/ di depan
+		if (p.startsWith("api/v2/")) {
+			return base + "/index.php?/" + p
+		}
+
+		// Selain itu, langsung gabung dengan /
+		return base + "/" + p
 	}
+
 
 	/**
 	 * Menambahkan hasil TC ke list testcaseProperties untuk dikirim ke TestRail.
@@ -435,6 +457,28 @@ class TestrailIntegration {
 			])
 		} else {
 			testcaseProperties.add([name, id, status])
+		}
+	}
+
+	private static boolean captureFailureScreenshot(String screenshotPath) {
+		try {
+			try {
+				def mobileDriver = MobileDriverFactory.getDriver()
+				if (mobileDriver != null) {
+					SafeActionsMobile.safeScreenshot(screenshotPath)
+					KeywordUtil.logInfo("[runStep] Screenshot error via SafeActionsMobile.safeScreenshot: ${screenshotPath}")
+					return true
+				}
+			} catch (Throwable ignored) {
+				KeywordUtil.logInfo("[runStep] Mobile driver tidak tersedia, memakai SafeActionsWeb.safeTakeScreenshot")
+			}
+
+			SafeActionsWeb.safeTakeScreenshot(screenshotPath)
+			KeywordUtil.logInfo("[runStep] Screenshot error via SafeActionsWeb.safeTakeScreenshot: ${screenshotPath}")
+			return true
+		} catch (Throwable screenshotEx) {
+			KeywordUtil.logInfo("[runStep] Gagal persiapkan screenshot error: ${screenshotEx.message}")
+			return false
 		}
 	}
 
@@ -476,7 +520,7 @@ class TestrailIntegration {
 				String screenshotDir  = "${GlobalVariable.SCREENSHOT_PATH}/${name}"
 				String screenshotPath = "${screenshotDir}/ERROR_${safeId}_${safeName}_${safeMsg}_${timestamp}.png"
 				new File(screenshotDir).mkdirs()
-				SafeActionsMobile.safeScreenshot(screenshotPath)
+				captureFailureScreenshot(screenshotPath)
 				KeywordUtil.logInfo("[runStep] Screenshot error: ${screenshotPath}")
 			} catch (Exception screenshotEx) {
 				KeywordUtil.logInfo("[runStep] Gagal persiapkan screenshot error: ${screenshotEx.message}")
