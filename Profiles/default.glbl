@@ -89,4 +89,10 @@
       <protected>false</protected>
       <valueType>STRING</valueType>
    </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description>TestrailIntegration.runStep</description>
+      <initValue>['flows', 'hooks']</initValue>
+      <name>DEBUG_FOLDER_EROR</name>
+      <protected>false</protected>
+   </GlobalVariableEntity>
 </GlobalVariableEntities>

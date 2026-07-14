@@ -670,9 +670,9 @@ public class SafeActionsWeb {
 		boolean scrolled = withRetry('safeScrollToText', false, retryCount) { int attempt ->
 			KeywordUtil.logInfo("[safeScrollToText] Mulai scrollToText '${text}' | attempt=${attempt}/${retryCount}")
 			WebUI.executeJavaScript(
-				"var els=document.querySelectorAll('*');for(var i=0;i<els.length;i++){if(els[i].childNodes.length===1&&els[i].childNodes[0].nodeType===3&&els[i].textContent.trim()===arguments[0]){els[i].scrollIntoView();break;}}",
-				[text]
-			)
+					"var els=document.querySelectorAll('*');for(var i=0;i<els.length;i++){if(els[i].childNodes.length===1&&els[i].childNodes[0].nodeType===3&&els[i].textContent.trim()===arguments[0]){els[i].scrollIntoView();break;}}",
+					[text]
+					)
 			KeywordUtil.logInfo("[safeScrollToText] Berhasil scrollToText '${text}' pada attempt ${attempt}")
 			true
 		}
