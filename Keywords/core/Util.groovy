@@ -372,7 +372,7 @@ class Util {
 	/**
 	 * Install APK ke device dari path yang ditentukan.
 	 * Jika file tidak ditemukan, method akan gagal dengan pesan path yang dicoba.
-	 * @param apkPath      Folder tempat APK berada (misal: "External Data/BATAM/APK/").
+	 * @param apkPath      Folder tempat APK berada (misal: "External Data/SQUAD/APK/").
 	 * @param apkFileName  Nama file APK (misal: "apps-1.16.0.apk").
 	 */
 	static void installApk(String apkPath, String apkFileName) {

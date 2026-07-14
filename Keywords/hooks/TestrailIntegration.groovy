@@ -547,9 +547,7 @@ class TestrailIntegration {
 			}
 
 			// Cari frame terluar dari paket flow user (bukan core/hooks)
-			List<String> flowPrefixes = [
-				'batam.',
-				'android.'] //List package keyword yang akan dipakai
+			List<String> flowPrefixes = GlobalVariable.DEBUG_FOLDER_EROR //List package keyword yang akan dipakai
 			List<StackTraceElement> flowFrames = t.stackTrace.findAll { StackTraceElement frame ->
 				flowPrefixes.any { String prefix -> frame.className.startsWith(prefix) }
 			}
